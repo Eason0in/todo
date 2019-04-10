@@ -1,6 +1,23 @@
 const express = require('express')
 const app = express()
+const mongoose = require('mongoose')
+
+const Todo = require('.models/todo.js')
 const port = 3000
+
+mongoose.connect('mongodb://127.0.0.1/todo', { useNewUrlParser: true })
+const db = mongoose.connection
+
+//連線異常
+db.on('error', () => {
+  console.log('mongodb error!')
+})
+
+//連線成功
+db.once('open', () => {
+  console.log('mongodb connected!')
+})
+
 app.get('/', (req, res) => {
   res.send('Hi')
 })
