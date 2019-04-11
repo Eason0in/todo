@@ -44,7 +44,9 @@ app.get('/todos/new', (req, res) => {
 
 //顯示一筆Todo的詳細內容
 app.get('/todos/:id', (req, res) => {
-  res.send('顯示Todo的詳細內容')
+  Todo.findById(req.params.id, (err, todo) => {
+    res.render('detail', { todo })
+  })
 })
 
 //修改Todo頁面
