@@ -1,6 +1,10 @@
 const express = require('express')
 const app = express()
+const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
+
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.set('view engine', 'handlebars')
 
 const Todo = require('./models/todo.js')
 const port = 3000
@@ -20,7 +24,7 @@ db.once('open', () => {
 
 //首頁
 app.get('/', (req, res) => {
-  res.send('Hi')
+  res.render('index')
 })
 
 //列出全部Todo
