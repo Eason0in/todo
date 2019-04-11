@@ -84,7 +84,13 @@ app.post('/todos/:id', (req, res) => {
 
 //刪除Todo
 app.post('/todos/:id/delete', (req, res) => {
-  res.send('刪除Todo')
+  Todo.findById(req.params.id, (err, todo) => {
+    if (err) return console.log(err)
+    todo.remove(error => {
+      if (error) return console.log(error)
+      res.redirect('/')
+    })
+  })
 })
 
 app.listen(port, () => {
