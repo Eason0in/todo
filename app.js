@@ -24,7 +24,10 @@ db.once('open', () => {
 
 //首頁
 app.get('/', (req, res) => {
-  res.render('index')
+  Todo.find((err, todos) => {
+    if (err) return console.log(err)
+    return res.render('index', { todos })
+  })
 })
 
 //列出全部Todo
