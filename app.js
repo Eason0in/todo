@@ -51,7 +51,10 @@ app.get('/todos/:id', (req, res) => {
 
 //修改Todo頁面
 app.get('/todos/:id/edit', (req, res) => {
-  res.send('修改Todo 頁面')
+  Todo.findById(req.params.id, (err, todo) => {
+    if (err) return console.log(err)
+    res.render('edit', { todo })
+  })
 })
 
 //POST
@@ -69,7 +72,14 @@ app.post('/todos', (req, res) => {
 
 //修改Todo
 app.post('/todos/:id', (req, res) => {
-  res.send('修改Todo')
+  Todo.findById(req.params.id, (err, todo) => {
+    if (err) return console.log(err)
+    todo.name = req.body.name
+    todo.save(err => {
+      if (err) return console.log(err)
+      res.redirect('/todos/' + req.params.id)
+    })
+  })
 })
 
 //刪除Todo
