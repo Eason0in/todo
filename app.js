@@ -26,10 +26,12 @@ db.once('open', () => {
 
 //首頁
 app.get('/', (req, res) => {
-  Todo.find((err, todos) => {
-    if (err) return console.log(err)
-    return res.render('index', { todos })
-  })
+  Todo.find()
+    .sort({ name: 1 })
+    .exec((err, todos) => {
+      if (err) return console.log(err)
+      return res.render('index', { todos })
+    })
 })
 
 //列出全部Todo
