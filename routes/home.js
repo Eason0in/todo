@@ -5,7 +5,7 @@ const Todo = require('../models/todo')
 const { authenticated } = require('../config/auth')
 //首頁
 router.get('/', authenticated, (req, res) => {
-  Todo.find()
+  Todo.find({ userId: req.user._id })
     .sort({ name: 1 })
     .exec((err, todos) => {
       if (err) return console.log(err)
