@@ -11,7 +11,7 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
-app.use(session({ secret: 'ddd111' }))
+app.use(session({ secret: 'ddd111', resave: false, saveUninitialized: true }))
 app.use(passport.initialize())
 app.use(passport.session())
 
@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 const Todo = require('./models/todo.js')
 const port = 3000
 
-mongoose.connect('mongodb://127.0.0.1/todo', { useNewUrlParser: true })
+mongoose.connect('mongodb://127.0.0.1/todo', { useNewUrlParser: true, useCreateIndex: true })
 const db = mongoose.connection
 
 //連線異常
