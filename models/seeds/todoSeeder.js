@@ -2,7 +2,12 @@ const mongoose = require('mongoose')
 const Todo = require('../todo.js')
 const db = mongoose.connection
 
-mongoose.connect('mongodb://127.0.0.1/todo', { useNewUrlParser: true })
+// mongoose.connect('mongodb://127.0.0.1/todo', { useNewUrlParser: true })
+
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/todo', {
+  useNewUrlParser: true,
+  useCreateIndex: true
+})
 
 db.on('error', () => {
   console.log('db is error')

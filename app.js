@@ -32,7 +32,12 @@ app.use((req, res, next) => {
 const Todo = require('./models/todo.js')
 const port = 3000
 
-mongoose.connect('mongodb://127.0.0.1/todo', { useNewUrlParser: true, useCreateIndex: true })
+// mongoose.connect('mongodb://127.0.0.1/todo', { useNewUrlParser: true, useCreateIndex: true })
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/todo', {
+  useNewUrlParser: true,
+  useCreateIndex: true
+})
+
 const db = mongoose.connection
 
 //連線異常
@@ -50,6 +55,10 @@ app.use('/todos', require('./routes/todo'))
 app.use('/users', require('./routes/user'))
 app.use('/auth', require('./routes/auths'))
 
-app.listen(port, () => {
-  console.log(`App is running in http://localhost:${port}.`)
+// app.listen(port, () => {
+//   console.log(`App is running in http://localhost:${port}.`)
+// })
+
+app.listen(process.env.PORT || port, () => {
+  console.log('App is running')
 })
